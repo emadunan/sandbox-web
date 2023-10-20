@@ -1,6 +1,8 @@
 import { Attributes } from "./Attributes";
 import { Eventing } from "./Eventing";
-import { Sync } from "./Sync";
+import { ApiSync } from "./ApiSync";
+import { Model } from "./Model";
+import { Collection } from "./Collection";
 
 export interface UserProps {
   id?: number;
@@ -8,25 +10,26 @@ export interface UserProps {
   age?: number;
 }
 
-export class User {
-  public events = new Eventing();
-  public sync = new Sync<UserProps>("http://localhost:3000/users");
-  public attributes: Attributes<UserProps>;
+const rootUrl = "http://localhost:3000/users";
 
-  constructor(attrs: UserProps) {
-    this.attributes = new Attributes<UserProps>(attrs);
+export class User extends Model<UserProps> {
+  static build(attrs: UserProps): User {
+    return new User(
+      new Attributes<UserProps>(attrs),
+      new Eventing(),
+      new ApiSync<UserProps>(rootUrl)
+    );
   }
 
-  get on() {
-    return this.events.on;
+  static buildCollection(): Collection<User, UserProps> {
+    return new Collection<User, UserProps>(
+      rootUrl,
+      (json: UserProps) => User.build(json)
+    );
   }
 
-  get trigger() {
-    return this.events.trigger;
+  setRandomAge() {
+    const age = Math.round(Math.random() * 100);
+    this.set({ age });
   }
-
-  get get() {
-    return this.attributes.get;
-  }
-
 }

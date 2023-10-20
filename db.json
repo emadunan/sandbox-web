@@ -2,13 +2,18 @@
   "users": [
     {
       "id": 1,
-      "name": "NEW NAME",
-      "age": 9999
+      "name": "Edited name",
+      "age": 100
     },
     {
       "name": "new record",
       "age": 0,
       "id": 6
+    },
+    {
+      "name": "newer name",
+      "age": 100,
+      "id": 7
     }
   ]
 }

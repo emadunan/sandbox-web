@@ -1,29 +1,12 @@
+import { UserForm } from "./views/UserForm";
 import { User } from "./models/User";
 
-// const user = new User({ name: "new record", age: 0 });
+const rootEl = document.getElementById("root")!;
+const user = User.build({ name: "NAME", age: 21 })
 
-// console.log(user.get('name'));
-
-// TEST This
-
-class Emp {
-  arr = ["a", "b", "c"];
-
-  constructor(public name: string) { }
-
-  normalFn() {
-    console.log(this);
-  }
-
-  arrowFn = () => {
-    console.log(this);
-  }
+if (rootEl) {
+  const userForm = new UserForm(rootEl, user);
+  userForm.render();
+} else {
+  throw new Error("Root element is not found");
 }
-
-const emp = new Emp("emad");
-
-const e1 = emp.normalFn;
-const e2 = emp.arrowFn;
-
-e1();
-e2();
