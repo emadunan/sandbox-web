@@ -1,5 +1,5 @@
 export type Callback = () => void;
 
-export interface ModelProps {
+export interface HasId {
   id?: number;
 }
